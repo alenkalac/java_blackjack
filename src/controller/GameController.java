@@ -49,6 +49,23 @@ public class GameController {
 				processMessage();
 			}
 		}
+		
+		private Player addNewPlayer(String id, String name) {
+			
+			if(name.equals("NULL"))
+				return null;
+			
+			Debug.print("PROCESSMESSAGE JOIN", "id-" + id + " name-" + name);
+			
+			int pid = Integer.parseInt(id);
+			Player p = new Player(pid, 2000);
+			p.setName(name);
+			gameModel.addPlayer(pid, p);
+			gameView.getGamePanel().setPlayers(gameModel.getPlayers());
+			
+			return p;
+			
+		}
 
 		/**
 		 * Process a message that's sent by the server and figure out what to do
@@ -60,7 +77,14 @@ public class GameController {
 			if (data.isEmpty())
 				return;
 
-			if (tokens[0].equals("GAMESTART")) {
+			if(tokens[0].equals("PLAYERLIST")) {
+				for(int i = 1; i < tokens.length; i++){
+					String sid = "" + (i-1);
+					this.addNewPlayer(sid, tokens[i]);
+				}
+			}
+			
+			else if (tokens[0].equals("GAMESTART")) {
 				gameView.getGamePanel().printText("Game is starting in " + tokens[1]);
 				if (tokens[1].equals("0"))
 					gameView.getGamePanel().printText("");
@@ -74,12 +98,7 @@ public class GameController {
 			
 			else if(tokens[0].equals("JOIN")) {
 				//JOIN SEAT_ID NAME
-				Debug.print("PROCESSMESSAGE JOIN", "id-" + tokens[1] + " name-" + tokens[2]);
-				int id = Integer.parseInt(tokens[1]);
-				Player p = new Player(id, 2000);
-				p.setName(tokens[2]);
-				gameModel.addPlayer(id, p);
-				gameView.getGamePanel().setPlayers(gameModel.getPlayers());
+				Player p = this.addNewPlayer(tokens[1], tokens[2]);
 				gameView.getGamePanel().addChatLineToArray("Server: Player " + p.getName() + " has Joined the room ");
 			}
 
@@ -148,6 +167,12 @@ public class GameController {
 			else if(tokens[0].equals("ENDGAME")) {
 				gameModel.setCards(new ArrayList<Card>());
 				gameView.getGamePanel().setCards(gameModel.getCards());
+				
+				for(int i = 0; i < gameModel.getPlayers().size(); i++) {
+					if(gameModel.getPlayers().get(i) == null)
+						continue;
+					gameModel.getPlayers().get(i).newHand();
+				}
 				
 				seat1 = 0;
 				seat2 = 0;

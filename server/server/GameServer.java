@@ -26,6 +26,7 @@ import controller.PlayerController;
 public class GameServer extends JFrame {
 
 	private ServerSocket serv;
+	@SuppressWarnings("unused")
 	private GameServer frame;
 	private ArrayList<PlayerController> players;
 	private Player dealer;
@@ -253,22 +254,26 @@ public class GameServer extends JFrame {
 			for (PlayerController player : players) {
 				if (playerNotAvailable(player))
 					continue;
+				System.out.println("r " + player.getPlayer().getName());
 
 				while (player.getPlayer().getHand().getCardValue() < 21) {
 					player.send("ACTIONREQUEST");
+					int pAction = 0; //default
 					
 					//wait for player action using a while loop 
 					while (player.getAction() == 0) {
 						try { Thread.sleep(33); } catch (InterruptedException e) {}
 					}
 
+					pAction = player.getAction();
+					player.setAction(0); //reset for next round
 					
-					switch (player.getAction()) {
+					switch (pAction) {
 						case 1:
 							break;
 						case 2:
 							dealCardToPlayer(player);
-							break;
+							continue;
 						case 3:
 							player.getPlayer().setBettingAmount( player.getPlayer().getBettingAmount() * 2);
 							dealCardToPlayer(player);
@@ -385,6 +390,8 @@ public class GameServer extends JFrame {
 			p.setCanBet(false);
 			p.send("ENDGAME");
 			p.getPlayer().setBettingAmount(0);
+			p.getPlayer().newHand();
+			p.setAction(0);
 		}
 	}
 

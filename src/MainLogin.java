@@ -2,7 +2,6 @@ import model.GameModel;
 import model.GraphicLibrary;
 import controller.Debug;
 import controller.LoginScreenController;
-import view.Frame;
 import view.LoginScreen;
 
 public class MainLogin {

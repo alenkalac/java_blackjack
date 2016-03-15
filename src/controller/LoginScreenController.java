@@ -48,6 +48,7 @@ public class LoginScreenController {
 			try {
 				gameModel.setSocket(new Socket("localhost", 6000));
 				gameModel.sendMessage("SETNAME " + username);
+				gameModel.sendMessage("GETUSERLIST");
 				loginScreen.hideWindow();
 				
 				startMainGame();

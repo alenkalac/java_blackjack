@@ -155,6 +155,19 @@ public class PlayerController implements Runnable {
 			sendToAllPlayers("JOIN " + this.getPlayer().getId() + " "
 					+ this.getPlayer().getName());
 		}
+		
+		else if(tokens[0].equals("GETUSERLIST")) {
+			String players = "";
+			ArrayList<PlayerController> allPlayers = serv.getAllPlayers();
+			for(PlayerController p : allPlayers) {
+				if(p == null)
+					players += "NULL ";
+				else
+					players += p.getPlayer().getName() + " ";
+			}
+			
+			this.send("PLAYERLIST " + players);
+		}
 
 		else if (tokens[0].equals("BET")) {
 			int bet = Integer.parseInt(tokens[1]);
