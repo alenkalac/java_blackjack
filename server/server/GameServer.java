@@ -35,6 +35,7 @@ public class GameServer extends JFrame {
 	private JTextArea jta;
 
 	private final int MAX_NUMBER_PLAYERS = 4;
+	private final int TIME_BETWEEN_GAME = 10;
 
 	/**
 	 * Constructor
@@ -254,9 +255,16 @@ public class GameServer extends JFrame {
 			for (PlayerController player : players) {
 				if (playerNotAvailable(player))
 					continue;
+				
+				boolean stand = false;
 				System.out.println("r " + player.getPlayer().getName());
 
 				while (player.getPlayer().getHand().getCardValue() < 21) {
+					
+					//break out of the loop if stand
+					if(stand)
+						break;
+					
 					player.send("ACTIONREQUEST");
 					int pAction = 0; //default
 					
@@ -264,12 +272,15 @@ public class GameServer extends JFrame {
 					while (player.getAction() == 0) {
 						try { Thread.sleep(33); } catch (InterruptedException e) {}
 					}
+					
+					
 
 					pAction = player.getAction();
 					player.setAction(0); //reset for next round
 					
 					switch (pAction) {
 						case 1:
+							stand = true;
 							break;
 						case 2:
 							dealCardToPlayer(player);
@@ -303,7 +314,7 @@ public class GameServer extends JFrame {
 		 * @throws InterruptedException
 		 */
 		private void startGameCountdown() throws InterruptedException {
-			int timeToStart = 30;
+			int timeToStart = TIME_BETWEEN_GAME;
 
 			while (timeToStart > 0) {
 				timeToStart--;
@@ -392,6 +403,7 @@ public class GameServer extends JFrame {
 			p.getPlayer().setBettingAmount(0);
 			p.getPlayer().newHand();
 			p.setAction(0);
+			dealer.newHand();
 		}
 	}
 

@@ -186,6 +186,8 @@ public class GameController {
 				gameModel.setCards(new ArrayList<Card>());
 				gameView.getGamePanel().setCards(gameModel.getCards());
 				
+				gameModel.getDealer().newHand();
+				
 				for(int i = 0; i < gameModel.getPlayers().size(); i++) {
 					if(gameModel.getPlayers().get(i) == null)
 						continue;
