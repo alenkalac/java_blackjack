@@ -47,7 +47,7 @@ public class GraphicLibrary {
 	/**
 	 * Load the graphics in memory to save up IO reading constantly from disk
 	 */
-	public void loadAssets() {
+	public static void loadAssets() {
 		
 		db = new HashMap<>();
 		
@@ -68,6 +68,9 @@ public class GraphicLibrary {
 	 * @return BufferedImage an image for background
 	 */
 	public static BufferedImage getBackgroundGraphic() {
+		if(db == null)
+			loadAssets();
+		
 		BufferedImage image = db.get(BACKGROUND);
 		return image;
 	}
@@ -79,6 +82,8 @@ public class GraphicLibrary {
 	 * @return BufferedImage image of the requested card
 	 */
 	public static BufferedImage getCardGraphic(int suit, int value) {
+		if(db == null)
+			loadAssets();
 
 		BufferedImage image = db.get(CARDS);
 		

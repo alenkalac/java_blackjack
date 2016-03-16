@@ -16,6 +16,7 @@ public class GameController {
 
 	private Frame gameView;
 	private GameModel gameModel;
+	private final int CARD_OFFSET = 40;
 
 	private int seat1, seat2, seat3, seat4, dealer = 0;
 
@@ -30,7 +31,7 @@ public class GameController {
 		this.gameView = gameView;
 
 		this.gameView.setChatBoxAction(new ChatBoxListener());
-		
+		this.gameView.getGamePanel().setDealer(gameModel.getDealer());
 
 		new Thread(new GameThread()).start();
 	}
@@ -50,6 +51,12 @@ public class GameController {
 			}
 		}
 		
+		/**
+		 * Add a new player to the table. 
+		 * @param id Player ID
+		 * @param name Player Name
+		 * @return returns null if player has no name or returns a player obj if player is added
+		 */
 		private Player addNewPlayer(String id, String name) {
 			
 			if(name.equals("NULL"))
@@ -65,6 +72,17 @@ public class GameController {
 			
 			return p;
 			
+		}
+		
+		/**
+		 * Resets all the seats in the client window
+		 */
+		private void resetSeats() {
+			seat1 = 0;
+			seat2 = 0;
+			seat3 = 0;
+			seat4 = 0;
+			dealer = 0;
 		}
 
 		/**
@@ -118,27 +136,27 @@ public class GameController {
 				
 				switch(playerId) {
 				case -1:
-					x = 370+ (dealer * 30); 
+					x = 370+ (dealer * CARD_OFFSET); 
 					y = 70;
 					dealer++;
 					break;
 				case 0:
-					x = 645+ (seat1 * 30); 
+					x = 645+ (seat1 * CARD_OFFSET); 
 					y = 390 ;
 					seat1++;
 					break;
 				case 1:
-					x = 480 + (seat2 * 30); 
+					x = 480 + (seat2 * CARD_OFFSET); 
 					y = 455;
 					seat2++;
 					break;
 				case 2: 
-					x = 250 + (seat3 * 30); 
+					x = 250 + (seat3 * CARD_OFFSET); 
 					y = 455;
 					seat3++;
 					break;
 				case 3:
-					x = 90 + (seat4 * 30); 
+					x = 90 + (seat4 * CARD_OFFSET); 
 					y = 370;
 					seat4++;
 					break;
@@ -174,11 +192,7 @@ public class GameController {
 					gameModel.getPlayers().get(i).newHand();
 				}
 				
-				seat1 = 0;
-				seat2 = 0;
-				seat3 = 0;
-				seat4 = 0;
-				dealer = 0;
+				this.resetSeats();
 			}
 			
 			else if (tokens[0].equals("ACTIONREQUEST")) {

@@ -20,6 +20,7 @@ public class GamePane extends JPanel implements Runnable {
 	private ArrayList<String> chatMessageArray;
 	private ArrayList<Player> players;
 	private ArrayList<Card> cards;
+	private Player dealer;
 	
 	/**
 	 * Constructor for the class
@@ -51,8 +52,8 @@ public class GamePane extends JPanel implements Runnable {
 		paintChatTextIndicator(g);
 		
 		//Mid Layer
-		//paintPlayers(g);
-		paintCard(g);
+		paintPlayers(g);
+		paintCards(g);
 		paintChat(g);
 		
 		//Front Layer
@@ -118,8 +119,30 @@ public class GamePane extends JPanel implements Runnable {
 		for(Player p : players) {
 			if(p == null) continue;
 			
+			int x = 0, y = 0;
 			g.setColor(Color.BLACK);
-			g.drawString(p.getName(), p.getId() * 50, p.getId() * 50);
+			switch(p.getId()) {
+			case 0:
+				x = 630;
+				y = 360;
+				break;
+			case 1:
+				x = 460;
+				y = 420;
+				break;
+			case 2:
+				x = 235;
+				y = 420;
+				break;
+			case 3:
+				x = 80;
+				y = 360;
+				break;
+			default: 
+				break;
+			}
+			g.drawString(p.getHand().getCardValue() + " " + p.getName(), x, y);
+			g.drawString(dealer.getHand().getCardValue() + " " + dealer.getName(), 350, 35);
 		}
 	}
 	
@@ -129,7 +152,7 @@ public class GamePane extends JPanel implements Runnable {
 	 * 
 	 * @param g
 	 */
-	private void paintCard(Graphics g) {
+	private void paintCards(Graphics g) {
 		for(Card c : cards) {
 			g.drawImage(c.getImage(), c.getXpos(), c.getYpos(), null);
 		}
@@ -227,5 +250,13 @@ public class GamePane extends JPanel implements Runnable {
 		int choice = JOptionPane.showOptionDialog(this, "What would you like to do?", "Action", JOptionPane.DEFAULT_OPTION, 0, null, options, options[1]);
 		return options[choice];
 		
+	}
+
+	public Player getDealer() {
+		return dealer;
+	}
+
+	public void setDealer(Player dealer) {
+		this.dealer = dealer;
 	}
 }
