@@ -6,8 +6,8 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
 
-import Player.Dealer;
-import Player.Player;
+import player.Dealer;
+import player.Player;
 import view.Card;
 
 public class GameModel {

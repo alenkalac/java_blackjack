@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 import javax.swing.JTextField;
 
-import Player.Player;
+import player.Player;
 import model.GameModel;
 import model.GraphicLibrary;
 import view.Card;

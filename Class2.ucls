@@ -64,7 +64,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="8" language="java" name="Player.Player" project="Project1" file="/Project1/src/Player/Player.java" 
+  <class id="8" language="java" name="player.Player" project="Project1" file="/Project1/src/player/Player.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="390" y="514"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 

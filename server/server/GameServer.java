@@ -12,8 +12,8 @@ import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-import Player.Dealer;
-import Player.Player;
+import player.Dealer;
+import player.Player;
 import view.Card;
 import controller.PlayerController;
 

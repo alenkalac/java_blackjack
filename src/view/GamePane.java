@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import Player.Dealer;
-import Player.Player;
+import player.Dealer;
+import player.Player;
 import model.GraphicLibrary;
 
 @SuppressWarnings("serial")

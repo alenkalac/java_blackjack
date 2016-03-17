@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
 
-import Player.Player;
+import player.Player;
 import server.GameServer;
 
 public class PlayerController implements Runnable {
