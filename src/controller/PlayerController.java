@@ -5,8 +5,9 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
+
+import Player.Player;
 import server.GameServer;
-import view.Player;
 
 public class PlayerController implements Runnable {
 
@@ -172,9 +173,12 @@ public class PlayerController implements Runnable {
 		else if (tokens[0].equals("BET")) {
 			int bet = Integer.parseInt(tokens[1]);
 			if (this.player.getCanBet()) {
-				this.player.setBettingAmount(bet);
-				this.sendToAllPlayers("BETMADE " + this.player.getId() + " "
+				boolean ableToBet = this.player.setBettingAmount(bet);
+				if(ableToBet)
+					this.sendToAllPlayers("BETMADE " + this.player.getId() + " "
 						+ bet);
+				else
+					this.player.setCanBet(false);
 			}
 		} 
 		

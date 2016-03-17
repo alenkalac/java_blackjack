@@ -12,8 +12,9 @@ import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import Player.Dealer;
+import Player.Player;
 import view.Card;
-import view.Player;
 import controller.PlayerController;
 
 /**
@@ -29,7 +30,7 @@ public class GameServer extends JFrame {
 	@SuppressWarnings("unused")
 	private GameServer frame;
 	private ArrayList<PlayerController> players;
-	private Player dealer;
+	private Dealer dealer;
 	private boolean inGame = false;
 	private GameServer gameServ;
 	private JTextArea jta;
@@ -64,7 +65,7 @@ public class GameServer extends JFrame {
 		this.gameServ = this;
 		this.serv = new ServerSocket(port);
 		this.players = new ArrayList<PlayerController>(4);
-		this.dealer = new Player(-1, 5000000);
+		this.dealer = new Dealer();
 		for (int i = 0; i < MAX_NUMBER_PLAYERS; i++) {
 			players.add(i, null);
 			writeMessage("init " + i + " seat");
@@ -218,6 +219,8 @@ public class GameServer extends JFrame {
 
 					// STEP 4: deal 2 cards to each player
 					dealCardsToAllPlayers();
+					dealCardsToDealer();
+					
 					dealCardsToAllPlayers();
 
 					// STEP 5: ask what player wants to do
@@ -384,6 +387,10 @@ public class GameServer extends JFrame {
 				e.printStackTrace();
 			}
 		}
+		
+	}
+	
+	private void dealCardsToDealer() {
 		int cardSuit = new Random().nextInt(3) + 1;
 		int cardValue = new Random().nextInt(12) + 1;
 		dealer.addToHand(new Card(cardValue));

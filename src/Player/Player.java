@@ -1,16 +1,13 @@
-package view;
+package Player;
 
 import controller.Debug;
 
-public class Player {
+public class Player extends Dealer {
 	private int id;
 	private int credit;
 	private int bet = 0;
 	private boolean playing;
 	private boolean canBet;
-
-	private Hand hand;
-	private String name;
 
 	/**
 	 * Constructor for the class
@@ -19,6 +16,7 @@ public class Player {
 	 * @param credit
 	 */
 	public Player(int id, int credit) {
+		super();
 		init(id, credit);
 	}
 
@@ -32,25 +30,7 @@ public class Player {
 		this.credit = credit;
 		this.playing = false;
 		this.id = id;
-		this.hand = new Hand();
-	}
 
-	/**
-	 * returns a player hand
-	 * 
-	 * @return ArrayList<Card> hand
-	 */
-	public Hand getHand() {
-		return this.hand;
-	}
-
-	/**
-	 * Adds a card to the hand
-	 * 
-	 * @param card
-	 */
-	public void addToHand(Card card) {
-		this.hand.addCard(card);
 	}
 
 	/**
@@ -64,7 +44,7 @@ public class Player {
 
 		return false;
 	}
-	
+
 	/**
 	 * get the betting amount made by the player
 	 * 
@@ -79,10 +59,37 @@ public class Player {
 	 * 
 	 * @param value
 	 */
-	public void setBettingAmount(int value) {
-		this.bet = value;
-		Debug.print("PROCESSDATA - PLAYERCONTROLLER - BET", "Bet amount set "
-				+ this.bet + " by player " + this.getName());
+	public boolean setBettingAmount(int value) {
+
+		if (getCredit() < value) {
+			this.bet = 0;
+			return false;
+		} else {
+			this.bet = value;
+			Debug.print(
+					"PROCESSDATA - PLAYERCONTROLLER - BET",
+					"Bet amount set " + this.bet + " by player "
+							+ this.getName());
+			debit(value);
+			return true;
+		}
+	}
+
+	/**
+	 * set credit to a value;
+	 * 
+	 * @param value
+	 */
+	private void setCredit(int value) {
+		this.credit = value;
+	}
+
+	/**
+	 * Debits the account.
+	 */
+	private void debit(int value) {
+		if (value > 0)
+			this.credit -= value;
 	}
 
 	/**
@@ -101,26 +108,6 @@ public class Player {
 	 */
 	public boolean getIsPlaying() {
 		return this.playing;
-	}
-
-	/**
-	 * Set the player's name.
-	 * 
-	 * @param name
-	 */
-	public void setName(String name) {
-		this.name = name;
-		Debug.print("PPROCESSDATA - PLAYERCONTROLLER - SETNAME",
-				"Player changed name to " + this.getName());
-	}
-
-	/**
-	 * Get the player's name
-	 * 
-	 * @return
-	 */
-	public String getName() {
-		return this.name;
 	}
 
 	/**
@@ -151,8 +138,11 @@ public class Player {
 		return this.id;
 	}
 
-	public void newHand() {
-		this.hand = new Hand();
-		
+	/**
+	 * returns the current credit that the player owns
+	 * @return int value for credit
+	 */
+	public int getCredit() {
+		return this.credit;
 	}
 }

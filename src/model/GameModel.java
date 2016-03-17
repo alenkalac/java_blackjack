@@ -6,15 +6,16 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
 
+import Player.Dealer;
+import Player.Player;
 import view.Card;
-import view.Player;
 
 public class GameModel {
 	private Socket socket = null;
 	private DataOutputStream outStream;
 	private DataInputStream inStream;
 	private ArrayList<Player> players;
-	private Player dealer;
+	private Dealer dealer;
 	private ArrayList<Card> cards;
 	
 	/**
@@ -124,7 +125,7 @@ public class GameModel {
 	 * return the dealer instance
 	 * @return
 	 */
-	public Player getDealer() {
+	public Dealer getDealer() {
 		return this.dealer;
 	}
 }

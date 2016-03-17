@@ -6,11 +6,11 @@ import java.util.ArrayList;
 
 import javax.swing.JTextField;
 
+import Player.Player;
 import model.GameModel;
 import model.GraphicLibrary;
 import view.Card;
 import view.Frame;
-import view.Player;
 
 public class GameController {
 
@@ -121,7 +121,10 @@ public class GameController {
 			}
 
 			else if (tokens[0].equals("BETMADE")) {
-				//Debug.print("PROCESSMESSAGE BETMADE ", "ID: " + tokens[1] + " Value: " + tokens[2]);
+				int index = Integer.parseInt(tokens[1]);
+				int amount = Integer.parseInt(tokens[2]);
+				gameModel.getPlayers().get(index).setBettingAmount(amount);
+				Debug.print("PROCESSMESSAGE PLACEBET " + amount);
 			}
 			
 			else if(tokens[0].equals("DEAL")) {
@@ -157,7 +160,7 @@ public class GameController {
 					break;
 				case 3:
 					x = 90 + (seat4 * CARD_OFFSET); 
-					y = 370;
+					y = 390;
 					seat4++;
 					break;
 				default:

@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import Player.Dealer;
+import Player.Player;
 import model.GraphicLibrary;
 
 @SuppressWarnings("serial")
@@ -20,7 +22,7 @@ public class GamePane extends JPanel implements Runnable {
 	private ArrayList<String> chatMessageArray;
 	private ArrayList<Player> players;
 	private ArrayList<Card> cards;
-	private Player dealer;
+	private Dealer dealer;
 	
 	/**
 	 * Constructor for the class
@@ -142,6 +144,7 @@ public class GamePane extends JPanel implements Runnable {
 				break;
 			}
 			g.drawString(p.getHand().getCardValue() + " " + p.getName(), x, y);
+			g.drawString("$" + p.getCredit() + " ", x, y + 150);
 			g.drawString(dealer.getHand().getCardValue() + " " + dealer.getName(), 350, 35);
 		}
 	}
@@ -252,11 +255,11 @@ public class GamePane extends JPanel implements Runnable {
 		
 	}
 
-	public Player getDealer() {
+	public Dealer getDealer() {
 		return dealer;
 	}
 
-	public void setDealer(Player dealer) {
+	public void setDealer(Dealer dealer) {
 		this.dealer = dealer;
 	}
 }
