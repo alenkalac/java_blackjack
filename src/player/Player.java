@@ -91,6 +91,11 @@ public class Player extends Dealer {
 		if (value > 0)
 			this.credit -= value;
 	}
+	
+	public void credit(int value) {
+		if(value > 0)
+			this.credit += value;
+	}
 
 	/**
 	 * Set if the player is currently playing a game.

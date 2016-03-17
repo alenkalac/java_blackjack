@@ -14,14 +14,15 @@ public class Frame extends JFrame {
 	
 	/**
 	 * Constructor for the class
+	 * @param name 
 	 */
-	public Frame() {
+	public Frame(String name) {
 		
 		gamePanel = new GamePane();
 		this.setSize(800, 650);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setResizable(false);
-		this.setTitle("Black Jack Game");
+		this.setTitle("Black Jack Game " + name);
 		this.add(gamePanel, BorderLayout.CENTER);
 		
 		chatInput = new JTextField();

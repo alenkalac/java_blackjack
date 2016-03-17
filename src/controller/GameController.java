@@ -185,6 +185,20 @@ public class GameController {
 				gameView.getGamePanel().addChatLineToArray(data.substring(5));
 			}
 			
+			else if(tokens[0].equals("WIN")) {
+				int index = Integer.parseInt(tokens[1]);
+				Player p = gameModel.getPlayers().get(index);
+				
+				p.credit(p.getBettingAmount() * 2);
+			}
+			
+			else if(tokens[0].equals("PUSH")) {
+				int index = Integer.parseInt(tokens[1]);
+				Player p = gameModel.getPlayers().get(index);
+				
+				p.credit(p.getBettingAmount());
+			}
+			
 			else if(tokens[0].equals("ENDGAME")) {
 				gameModel.setCards(new ArrayList<Card>());
 				gameView.getGamePanel().setCards(gameModel.getCards());

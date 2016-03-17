@@ -40,4 +40,10 @@ public class Hand{
 		return value;
 	}
 	
+	public boolean isBust() {
+		if(this.getCardValue() > 21)
+			return true;
+		return false;
+	}
+	
 }

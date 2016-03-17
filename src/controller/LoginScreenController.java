@@ -4,12 +4,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.Socket;
-
 import javax.swing.JButton;
-
 import model.GameModel;
 import view.Frame;
-import view.GamePane;
 import view.LoginScreen;
 
 /**
@@ -48,10 +45,11 @@ public class LoginScreenController {
 			try {
 				gameModel.setSocket(new Socket("localhost", 6000));
 				gameModel.sendMessage("SETNAME " + username);
-				gameModel.sendMessage("GETUSERLIST");
+				gameModel.sendMessage("GETPLAYERLIST");
+				
 				loginScreen.hideWindow();
 				
-				startMainGame();
+				startMainGame(username);
 				
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
@@ -59,8 +57,12 @@ public class LoginScreenController {
 			}
 		}
 		
-		private void startMainGame() {
-			Frame gameView = new Frame();
+		/**
+		 * Starts the main game.
+		 * @param name name to appear on the title bar of the frame
+		 */
+		private void startMainGame(String name) {
+			Frame gameView = new Frame(name);
 			GameController gameController = new GameController(gameView, gameModel);
 		}
 	}

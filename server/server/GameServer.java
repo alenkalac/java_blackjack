@@ -225,12 +225,56 @@ public class GameServer extends JFrame {
 
 					// STEP 5: ask what player wants to do
 					requestActionFromPlayers();
+					
+					// STEP 6: dealer draws cards until bust or over 17
+					dealerDrawUntil17OrOver();
 
+					// STEP 7: check winnings
+					checkWinnings();
+					
 					// STEP LAST: clear all bets
 					clearPlayerBets();
 				}
 			} catch (InterruptedException e) {
 				System.err.println(e.getMessage());
+			}
+		}
+		
+		private void checkWinnings() {
+			for (PlayerController player : players) {
+				if (playerNotAvailable(player))
+					continue;
+
+				System.out.println("Dealers hand " + dealer.getHand().getCardValue());
+				System.out.println("Player hand " + player.getPlayer().getHand().getCardValue());
+				
+				if(player.getPlayer().getHand().isBust()) {
+					sendToAllPlayers("LOST " + player.getPlayer().getId());
+					continue;
+				}
+				
+				else if(dealer.getHand().isBust()) {
+					sendToAllPlayers("WIN " + player.getPlayer().getId());
+					player.getPlayer().credit(player.getPlayer().getBettingAmount() * 2);
+					continue;
+				}
+				
+				else if(player.getPlayer().getHand().getCardValue() > dealer.getHand().getCardValue()) {
+					sendToAllPlayers("WIN " + player.getPlayer().getId());
+					player.getPlayer().credit(player.getPlayer().getBettingAmount() * 2);
+					continue;
+				}
+				
+				else if(player.getPlayer().getHand().getCardValue() == dealer.getHand().getCardValue()){
+					sendToAllPlayers("PUSH " + player.getPlayer().getId());
+					player.getPlayer().credit(player.getPlayer().getBettingAmount());
+					continue;
+				}
+				
+				else {
+					sendToAllPlayers("LOST " + player.getPlayer().getId());
+					continue;
+				}
 			}
 		}
 
@@ -260,7 +304,7 @@ public class GameServer extends JFrame {
 					continue;
 				
 				boolean stand = false;
-				System.out.println("r " + player.getPlayer().getName());
+				//System.out.println("r " + player.getPlayer().getName());
 
 				while (player.getPlayer().getHand().getCardValue() < 21) {
 					
@@ -276,8 +320,6 @@ public class GameServer extends JFrame {
 						try { Thread.sleep(33); } catch (InterruptedException e) {}
 					}
 					
-					
-
 					pAction = player.getAction();
 					player.setAction(0); //reset for next round
 					
@@ -362,7 +404,7 @@ public class GameServer extends JFrame {
 		}
 	}
 
-	public void dealCardToPlayer(PlayerController p) {
+	private void dealCardToPlayer(PlayerController p) {
 		int cardSuit = new Random().nextInt(3) + 1;
 		int cardValue = new Random().nextInt(12) + 1;
 
@@ -378,16 +420,17 @@ public class GameServer extends JFrame {
 			if (playerNotAvailable(p))
 				continue;
 
-			dealCardToPlayer(p);
-
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			dealCardToPlayer(p);			
+			sleepForSecond();
 		}
-		
+	}
+	
+	
+	private void dealerDrawUntil17OrOver() {
+		while(dealer.getHand().getCardValue() < 17) {
+			dealCardsToDealer();
+			sleepForSecond();
+		}
 	}
 	
 	private void dealCardsToDealer() {
@@ -427,6 +470,15 @@ public class GameServer extends JFrame {
 			if (playerNotAvailable(p))
 				continue;
 			p.send(msg);
+		}
+	}
+	
+	private void sleepForSecond() {
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 }

@@ -157,7 +157,7 @@ public class PlayerController implements Runnable {
 					+ this.getPlayer().getName());
 		}
 		
-		else if(tokens[0].equals("GETUSERLIST")) {
+		else if(tokens[0].equals("GETPLAYERLIST")) {
 			String players = "";
 			ArrayList<PlayerController> allPlayers = serv.getAllPlayers();
 			for(PlayerController p : allPlayers) {

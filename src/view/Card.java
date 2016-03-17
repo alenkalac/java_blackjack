@@ -17,7 +17,10 @@ public class Card {
 	}
 	
 	public Card(int value) {
-		this.value = value;
+		if(value < 10)
+			this.value = value;
+		else
+			this.value = 10;
 	}
 	
 	public int getValue() {
