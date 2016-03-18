@@ -209,10 +209,18 @@ public class PlayerController implements Runnable {
 
 	}
 
+	/**
+	 * returns an action that the player chose from action dialog
+	 * @return
+	 */
 	public int getAction() {
 		return action;
 	}
 
+	/**
+	 * sets the action for the player such as hit, stay or double
+	 * @param action
+	 */
 	public void setAction(int action) {
 		this.action = action;
 	}

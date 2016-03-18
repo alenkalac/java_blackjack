@@ -7,6 +7,13 @@ import java.net.UnknownHostException;
 
 public class Client {
 	
+	/**
+	 * tester class. to test tcp
+	 * @param address
+	 * @param port
+	 * @throws UnknownHostException
+	 * @throws IOException
+	 */
 	Client(String address, int port) throws UnknownHostException, IOException {
 		Socket socket = new Socket(address, port);
 		

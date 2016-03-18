@@ -248,6 +248,10 @@ public class GamePane extends JPanel implements Runnable {
 		}	
 	}
 
+	/**
+	 * show the dialog option to the player to choose from one 
+	 * @return
+	 */
 	public String showActionDialog() {
 		String[] options = {"Stay", "Hit", "Double"};
 		int choice = JOptionPane.showOptionDialog(this, "What would you like to do?", "Action", JOptionPane.DEFAULT_OPTION, 0, null, options, options[1]);
@@ -255,10 +259,18 @@ public class GamePane extends JPanel implements Runnable {
 		
 	}
 
+	/**
+	 * get the dealer instance
+	 * @return
+	 */
 	public Dealer getDealer() {
 		return dealer;
 	}
 
+	/**
+	 * set the dealer instance 
+	 * @param dealer
+	 */
 	public void setDealer(Dealer dealer) {
 		this.dealer = dealer;
 	}

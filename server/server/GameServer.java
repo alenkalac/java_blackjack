@@ -36,7 +36,7 @@ public class GameServer extends JFrame {
 	private JTextArea jta;
 
 	private final int MAX_NUMBER_PLAYERS = 4;
-	private final int TIME_BETWEEN_GAME = 10;
+	private final int TIME_BETWEEN_GAME = 20;
 
 	/**
 	 * Constructor
@@ -240,6 +240,9 @@ public class GameServer extends JFrame {
 			}
 		}
 		
+		/**
+		 * check winning conditions for each player
+		 */
 		private void checkWinnings() {
 			for (PlayerController player : players) {
 				if (playerNotAvailable(player))

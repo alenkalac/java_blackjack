@@ -92,6 +92,10 @@ public class Player extends Dealer {
 			this.credit -= value;
 	}
 	
+	/**
+	 * add to the credit for the player
+	 * @param value
+	 */
 	public void credit(int value) {
 		if(value > 0)
 			this.credit += value;

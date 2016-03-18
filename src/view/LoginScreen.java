@@ -17,18 +17,32 @@ public class LoginScreen extends JFrame {
 	private JButton loginBtn;
 	private JFrame frame;
 	
+	/**
+	 * Default constructor
+	 */
 	public LoginScreen() {
 		init();
 	}
 	
+	/**
+	 * set the action for the login button
+	 * @param event
+	 */
 	public void setLoginButtonAction(ActionListener event) {
 		this.loginBtn.addActionListener(event);
 	}
 	
+	/**
+	 * get the user name from the input field
+	 * @return
+	 */
 	public String getUserName() {
 		return this.username.getText();
 	}
 	
+	/**
+	 * hide the window
+	 */
 	public void hideWindow() {
 		this.setVisible(false);
 	}
